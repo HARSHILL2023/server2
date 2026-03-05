@@ -5,9 +5,10 @@ const app = express();
 
 app.use(express.json());
 
-mongoose.connect('mongodb://localhost:27017/codingGita')
-.then(()=>console.log("MongoDB Connection Successfully"))
-.catch(()=> console.log("MongoDB Connection Failed"));
+mongoose.connect("mongodb://localhost:27017/codingGita")
+.then(() => console.log("MongoDB Connection Successfully"))
+.catch(() => console.log("MongoDB Connection Failed"));
+
 
 
 const studentSchema = new mongoose.Schema({
@@ -18,6 +19,8 @@ const studentSchema = new mongoose.Schema({
 
 
 const Student = mongoose.model("Student", studentSchema);
+
+
 
 app.post("/students", async (req, res) => {
 
@@ -38,7 +41,29 @@ app.post("/students", async (req, res) => {
 
 });
 
- 
+
+
+
+app.post("/addmultipleusers", async (req, res) => {
+
+    try {
+
+        const students = await Student.insertMany(req.body);
+
+        res.status(201).json(students);
+
+    }
+    catch (err) {
+
+        res.status(400).json({ error: err.message });
+
+    }
+
+});
+
+
+
+
 app.get("/students", async (req, res) => {
 
     const data = await Student.find({});
@@ -48,16 +73,18 @@ app.get("/students", async (req, res) => {
 });
 
 
-// Home Route
+
+
 app.get("/", (req, res) => {
 
-  res.send("Student server is running...");
+    res.send("Student server is running...");
 
 });
 
 
+
 app.listen(3000, () => {
 
-  console.log("Server started on port 3000");
+    console.log("Server started on port 3000");
 
 });
