@@ -81,7 +81,24 @@ app.get("/", (req, res) => {
 
 });
 
+//pagination
 
+app.get("/students-pagination", async (req, res) => {
+    try {
+
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+
+        const skip = (page - 1) * limit;
+
+        const students = await Student.find().skip(skip).limit(limit);
+
+        res.status(200).json(students);
+
+    } catch (error) {
+        res.status(404).send(error);
+    }
+});
 
 app.listen(3000, () => {
 
