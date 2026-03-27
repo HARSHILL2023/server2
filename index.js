@@ -140,7 +140,7 @@ app.listen(5000, () => console.log("Server running on port 5000"));
 // //route
 
 // app.get("/",(req,res)=>{
-//   res.status(200).json("Server is running...")
+    //   res.status(200).json("Server is running...")
 // })
 
 // app.get("/users", async (req, res) => {
